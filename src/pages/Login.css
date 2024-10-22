@@ -1,0 +1,126 @@
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+}
+
+.login-box {
+  background-color: rgba(51, 51, 51, 0.9);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 300px;
+  text-align: center;
+  color: white;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.centered-logo {
+  max-width: 150px; 
+  height: auto;
+}
+
+h1, h2 {
+  margin: 0.5rem 0;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  background-color: #1a1a1a;
+  color: white;
+}
+
+.login-button, .register-button, .google-login {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.login-button {
+   display: block;
+    background-color: red;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s ease;
+    width: 100%;
+}
+
+.login-button:hover {
+  background-color: #0069d9;
+}
+
+.daftardisini {
+    position: relative;
+    top: 5px;
+    display: block;
+    background-color: red;
+    border-radius: 10px;
+    color: #fff;
+    font-size: 16px;
+    padding: 10px 20px;
+    text-decoration: none;
+    text-align: center;
+    transition: 0.2s ease;
+    width: 100%;
+}
+
+.daftardisini:hover {
+    background-color: #0069d9;
+}
+
+
+.google-login {
+  background-color: #4a4a4a;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.google-login img {
+  margin-right: 10px;
+  width: 20px;
+  height: 20px;
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #666;
+}
+
+.divider span {
+  padding: 0 10px;
+}
+
+.forgot-password {
+  color: #007bff;
+  text-decoration: none;
+}
+

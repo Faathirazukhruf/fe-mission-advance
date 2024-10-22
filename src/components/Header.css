@@ -1,0 +1,50 @@
+header {
+  background-color: black;
+  padding: 15px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 80px;
+  height: auto;
+  margin: 10px;
+}
+
+.icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 35px;
+  height: auto;
+  margin: 10px;
+}
+
+.icon:hover {
+  color: #f75815;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+nav li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #ff6600;
+}

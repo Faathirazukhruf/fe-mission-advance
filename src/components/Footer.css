@@ -1,0 +1,39 @@
+footer {
+  background-color: #222;
+  padding: 20px 0;
+}
+
+footer img {
+  max-width: 100px; 
+  margin-right: 10px;
+  display: block;
+  width: 80px;
+}
+
+footer p {
+  color: white;
+  margin: 2%;
+  text-align: center;
+}
+
+.genre-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.genre-item {
+  padding: 8px 16px;
+  background-color: #333;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  cursor: pointer;
+}
+
+.genre-item:hover {
+  background-color: #444;
+}
