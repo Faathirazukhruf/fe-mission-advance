@@ -11,8 +11,8 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Pastikan API_URL hanya berisi bagian dasar dari URL MockAPI
-  const API_URL = import.meta.env.VITE_API_URL; // Contoh: 'https://67163d3d33bc2bfe40bd0b1a.mockapi.io'
+  
+  const API_URL = import.meta.env.VITE_API_URL; 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -25,7 +25,7 @@ function Login() {
     
     // Kirim permintaan untuk mendapatkan daftar pengguna
     try {
-      const response = await axios.get(`${API_URL}/users`); // Pastikan ini benar
+      const response = await axios.get(`${API_URL}/users`); 
       const users = response.data;
 
       // Cek apakah username dan password cocok
