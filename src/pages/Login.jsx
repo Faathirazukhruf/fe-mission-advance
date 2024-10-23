@@ -11,29 +11,29 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  // Pastikan API_URL hanya berisi bagian dasar dari URL MockAPI
-  const API_URL = import.meta.env.VITE_API_URL; // Contoh: 'https://67163d3d33bc2bfe40bd0b1a.mockapi.io'
+  const API_URL = import.meta.env.VITE_API_URL; 
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     
-    // Validasi sederhana
     if (!username || !password) {
       setError('Semua field harus diisi');
       return;
     }
     
-    // Kirim permintaan untuk mendapatkan daftar pengguna
     try {
-      const response = await axios.get(`${API_URL}/users`); // Pastikan ini benar
+      const response = await axios.get(`${API_URL}/users`); 
       const users = response.data;
 
-      // Cek apakah username dan password cocok
       const user = users.find(user => user.username === username && user.password === password);
       
       if (user) {
         console.log('Login berhasil:', user);
-        navigate('/beranda'); // Arahkan ke halaman Beranda
+        
+        sessionStorage.setItem('username', user.username); // Simpan username
+        sessionStorage.setItem('token', user.token); // Simpan token
+
+        navigate('/beranda'); 
       } else {
         setError('Login gagal. Periksa username dan kata sandi Anda.');
       }

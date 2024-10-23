@@ -1,0 +1,83 @@
+.account-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.account-title {
+    color: rgb(236, 247, 247);
+}
+
+.account-container {
+  background-color: #1e1e1e; 
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 300px;
+  text-align: center;
+}
+
+.account-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.account-details {
+  margin-bottom: 20px;
+}
+
+.profile-picture {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  border: 2px solid #ffffff; 
+}
+
+.account-name {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.account-email {
+  font-size: 14px;
+  color: #b0b0b0; 
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: rgb(236, 247, 247); 
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: rgb(236, 247, 247); 
+}
+
+.back-button {
+  background-color: #03a9f4; 
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 5px;
+  transition: background-color 0.3s;
+}
+
+.back-button:hover {
+  background-color: #0288d1; 
+}
+
+.error-message {
+  color: #ff5252; 
+  margin-bottom: 15px;
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom'; // Import Link dari react-router-dom
 import './Header.css';
 
 const Header = () => {
@@ -6,12 +7,12 @@ const Header = () => {
     <header>
       <div className="container">
         <img src="Logo.png" alt="Logo" className="logo" />
-        <a href="/"><img src="Ellipse 395.png" alt="icon" className="icon" /></a>
+        <Link to="/account"><img src="Ellipse 395.png" alt="icon" className="icon" /></Link> {/* Pastikan path ini benar */}
         <nav>
           <ul>
-            <li><a href="#">Series</a></li>
-            <li><a href="#">Film</a></li>
-            <li><a href="#">Daftar Saya</a></li>
+            <li><Link to="#">Series</Link></li>
+            <li><Link to="#">Film</Link></li>
+            <li><Link to="#">Daftar Saya</Link></li>
           </ul>
         </nav>
       </div>
