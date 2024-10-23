@@ -11,6 +11,10 @@ function Login() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
+<<<<<<< HEAD
+=======
+  
+>>>>>>> 92cdfc22a634cbe6661381400bc45065c5950312
   const API_URL = import.meta.env.VITE_API_URL; 
 
   const handleSubmit = async (event) => {
