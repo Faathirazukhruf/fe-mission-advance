@@ -1,5 +1,5 @@
 .hero {
-  background-image: url('../assets/Rectangle 9.png'); /* Use your background image here */
+  background-image: url('../assets/Rectangle 9.png'); 
   background-size: cover;
   background-position: center;
   color: white;
@@ -46,5 +46,6 @@
 }
 
 .btn-start:hover, .btn-info:hover {
+  background-color: rgb(72, 92, 134);
   opacity: 0.8;
 }

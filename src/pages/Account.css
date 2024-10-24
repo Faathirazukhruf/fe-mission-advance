@@ -59,7 +59,7 @@ button {
 }
 
 button:hover {
-  background-color: rgb(236, 247, 247); 
+  background-color: rgb(175, 14, 8); 
 }
 
 .back-button {
@@ -80,4 +80,14 @@ button:hover {
 .error-message {
   color: #ff5252; 
   margin-bottom: 15px;
+}
+
+.logout-button {
+  color: white;
+  background-color: #03a9f4;
+}
+
+.delete-button {
+  color: white;
+  background-color: #03a9f4;
 }
