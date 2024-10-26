@@ -91,3 +91,26 @@ button:hover {
   color: white;
   background-color: #03a9f4;
 }
+
+.edit-button {
+  color: white;
+  background-color: #03a9f4;
+}
+
+.edit-button:hover {
+  background-color: #0288d1;
+}
+
+.update-button {
+  color: white;
+  background-color: #03a9f4;
+}
+
+.update-button:hover {
+  background-color: #0288d1;
+}
+
+.cancel-button {
+  color: white;
+  background-color: #03a9f4;
+}

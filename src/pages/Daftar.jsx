@@ -33,6 +33,11 @@ function Daftar() {
     });
 
     console.log("Pendaftaran berhasil:", response.data);
+
+    // Simpan data pendaftaran di session storage
+      sessionStorage.setItem('username', response.data.username); // Simpan username
+      sessionStorage.setItem('token', response.data.token); // Simpan token
+      
     navigate("/beranda");
   } catch (error) {
     console.error("Pendaftaran gagal:", error);
