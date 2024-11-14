@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
-import './Account.css'; 
+import { useNavigate } from 'react-router-dom';
+import './Account.css';
 
 function Account() {
   const [account, setAccount] = useState(null);
@@ -9,20 +9,20 @@ function Account() {
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState('');
   const [newPassword, setNewPassword] = useState('');
+  const [profileImage, setProfileImage] = useState(null);
   const navigate = useNavigate();
-  const API_URL = import.meta.env.VITE_API_URL; 
+  const API_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
-    const username = sessionStorage.getItem('username'); // Ambil username dari sessionStorage
-    const token = sessionStorage.getItem('token'); // Ambil token dari sessionStorage
+    const username = sessionStorage.getItem('username');
+    const token = sessionStorage.getItem('token');
 
     if (!username || !token) {
-      navigate('/'); // Arahkan ke halaman login jika username atau token tidak ada
+      navigate('/');
     } else {
-      // Ambil detail akun menggunakan username
       axios.get(`${API_URL}/users`, {
         headers: {
-          Authorization: `Bearer ${token}` // Kirim token dalam header
+          Authorization: `Bearer ${token}`
         }
       })
       .then(response => {
@@ -30,8 +30,8 @@ function Account() {
         const user = users.find(u => u.username === username);
 
         if (user) {
-          setAccount(user); // Simpan data akun ke state
-          setNewUsername(user.username); // Set username untuk edit
+          setAccount(user);
+          setNewUsername(user.username);
         } else {
           setError('Pengguna tidak ditemukan.');
         }
@@ -44,23 +44,23 @@ function Account() {
   }, [API_URL, navigate]);
 
   const handleLogout = () => {
-    sessionStorage.removeItem('username'); // Hapus username dari sessionStorage
-    sessionStorage.removeItem('token'); // Hapus token dari sessionStorage
-    navigate('/'); // Arahkan ke halaman login setelah logout
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('token');
+    navigate('/');
   };
 
   const handleDeleteAccount = async () => {
-    const user = account; // Gunakan data pengguna yang sudah ditemukan
+    const user = account;
 
     if (window.confirm('Apakah Anda yakin ingin menghapus akun ini?')) {
       try {
         await axios.delete(`${API_URL}/users/${user.id}`, {
           headers: {
-            Authorization: `Bearer ${sessionStorage.getItem('token')}` // Kirim token dalam header
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
           }
         });
         alert('Akun berhasil dihapus.');
-        handleLogout(); // Logout setelah menghapus akun
+        handleLogout();
       } catch (error) {
         console.error('Gagal menghapus akun:', error);
         setError('Gagal menghapus akun. Coba lagi nanti.');
@@ -69,15 +69,15 @@ function Account() {
   };
 
   const handleBackToHome = () => {
-    navigate('/beranda'); // Arahkan kembali ke halaman beranda
+    navigate('/beranda');
   };
 
   const handleEditToggle = () => {
-    setIsEditing(!isEditing); // Toggle mode edit
+    setIsEditing(!isEditing);
   };
 
   const handleUpdateAccount = async () => {
-    const user = account; // Gunakan data pengguna yang sudah ditemukan
+    const user = account;
 
     if (newUsername.trim() === '') {
       setError('Username tidak boleh kosong.');
@@ -85,22 +85,31 @@ function Account() {
     }
 
     try {
-      const response = await axios.put(`${API_URL}/users/${user.id}`, {
-        username: newUsername,
-        password: newPassword, // Hanya kirim password jika diubah
-      }, {
+      const formData = new FormData();
+      formData.append('username', newUsername);
+      formData.append('password', newPassword);
+      if (profileImage) {
+        formData.append('profile_image', profileImage);
+      }
+
+      const response = await axios.put(`${API_URL}/users/${user.id}`, formData, {
         headers: {
-          Authorization: `Bearer ${sessionStorage.getItem('token')}` // Kirim token dalam header
+          Authorization: `Bearer ${sessionStorage.getItem('token')}`,
+          'Content-Type': 'multipart/form-data'
         }
       });
 
-      setAccount(response.data); // Update state dengan data yang baru
-      setIsEditing(false); // Keluar dari mode edit
+      setAccount(response.data);
+      setIsEditing(false);
       alert('Informasi akun berhasil diperbarui.');
     } catch (error) {
       console.error('Gagal memperbarui akun:', error);
       setError('Gagal memperbarui akun. Coba lagi nanti.');
     }
+  };
+
+  const handleImageUpload = (event) => {
+    setProfileImage(event.target.files[0]);
   };
 
   return (
@@ -110,7 +119,11 @@ function Account() {
         {error && <p className="error-message">{error}</p>}
         {account ? (
           <div className="account-details">
-            <img src="Ellipse 395.png" alt="icon" className="profile-picture" /> 
+            <img
+              src={account.profile_image_url || 'Ellipse 395.png'}
+              alt="icon"
+              className="profile-picture"
+            />
             {isEditing ? (
               <div>
                 <input
@@ -125,17 +138,34 @@ function Account() {
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Password (kosongkan jika tidak ingin mengubah)"
                 />
-                <button onClick={handleUpdateAccount} className="update-button">Simpan Perubahan</button>
-                <button onClick={handleEditToggle} className="cancel-button">Batal</button>
+                <input
+                  type="file"
+                  onChange={handleImageUpload}
+                  accept="image/*"
+                />
+                <button onClick={handleUpdateAccount} className="update-button">
+                  Simpan Perubahan
+                </button>
+                <button onClick={handleEditToggle} className="cancel-button">
+                  Batal
+                </button>
               </div>
             ) : (
               <div>
                 <h3 className="account-name">{account.username}</h3>
                 <p className="account-email">{account.email}</p>
-                <button onClick={handleEditToggle} className="edit-button">Edit Akun</button>
-                <button onClick={handleLogout} className="logout-button">Logout</button>
-                <button onClick={handleDeleteAccount} className="delete-button">Hapus Akun</button>
-                <button onClick={handleBackToHome} className="back-button">Kembali ke Beranda</button> 
+                <button onClick={handleEditToggle} className="edit-button">
+                  Edit Akun
+                </button>
+                <button onClick={handleLogout} className="logout-button">
+                  Logout
+                </button>
+                <button onClick={handleDeleteAccount} className="delete-button">
+                  Hapus Akun
+                </button>
+                <button onClick={handleBackToHome} className="back-button">
+                  Kembali ke Beranda
+                </button>
               </div>
             )}
           </div>

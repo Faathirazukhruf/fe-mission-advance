@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'; 
+import { auth, provider } from './firebaseConfig'; // Import Firebase config
+import { signInWithPopup } from 'firebase/auth'; // Import signInWithPopup
 import './Login.css'; 
 import logo from "../assets/Logo.png"; 
 import background from "../assets/masuk.jpeg";
 
 function Login() {
-  const [username, setUsername] = useState('')
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-
   const API_URL = import.meta.env.VITE_API_URL; 
 
   const handleSubmit = async (event) => {
@@ -40,6 +41,27 @@ function Login() {
     } catch (error) {
       console.error('Login gagal:', error);
       setError('Gagal login. Coba lagi nanti.');
+    }
+  };
+
+  const handleGoogleSignIn = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      // Kirim data pengguna ke API Anda (jika perlu)
+      const response = await axios.post(`${API_URL}/users`, {
+        username: user.displayName,
+        email: user.email,
+      });
+
+      console.log("Login dengan Google berhasil:", response.data);
+      sessionStorage.setItem('username', response.data.username);
+      sessionStorage.setItem('token', response.data.token); // Simpan token
+      navigate('/beranda');
+    } catch (error) {
+      console.error("Gagal masuk dengan Google:", error);
+      setError("Gagal masuk dengan Google. Coba lagi nanti.");
     }
   };
 
@@ -75,10 +97,10 @@ function Login() {
           </div>
           <p>lupa kata sandi?</p>
           <a href="/daftar" className="daftardisini">Belum punya akun? daftar disini</a>
-          <a href="https://accounts.google.com/signin" className="google-login">
+          <button type="button" className="google-login" onClick={handleGoogleSignIn}>
             <img src="https://www.google.com/images/branding/product/ico/googleg_lodp.ico" alt="Google" />
             Masuk dengan Google
-          </a>
+          </button>
         </div>
       </div>
     </>
