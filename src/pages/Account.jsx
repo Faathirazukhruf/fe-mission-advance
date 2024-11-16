@@ -76,6 +76,28 @@ function Account() {
     setIsEditing(!isEditing);
   };
 
+  const convertToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = (error) => reject(error);
+    });
+  };
+
+  const handleImageUpload = async (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      try {
+        const base64Image = await convertToBase64(file);
+        setProfileImage(base64Image);
+      } catch (error) {
+        console.error('Error converting image:', error);
+        setError('Gagal mengupload gambar');
+      }
+    }
+  };
+
   const handleUpdateAccount = async () => {
     const user = account;
 
@@ -85,31 +107,39 @@ function Account() {
     }
 
     try {
-      const formData = new FormData();
-      formData.append('username', newUsername);
-      formData.append('password', newPassword);
-      if (profileImage) {
-        formData.append('profile_image', profileImage);
+      // Persiapkan data yang akan diupdate
+      const updateData = {
+        username: newUsername,
+        profile_image_url: profileImage || account.profile_image_url
+      };
+
+      // Tambahkan password ke updateData jika ada perubahan password
+      if (newPassword) {
+        updateData.password = newPassword;
       }
 
-      const response = await axios.put(`${API_URL}/users/${user.id}`, formData, {
+      const response = await axios.put(`${API_URL}/users/${user.id}`, updateData, {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem('token')}`,
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'application/json'
         }
       });
 
+      // Update state account dengan data terbaru
       setAccount(response.data);
       setIsEditing(false);
+      // Reset state profileImage
+      setProfileImage(null);
       alert('Informasi akun berhasil diperbarui.');
+
+      // Update username di session storage jika berubah
+      if (newUsername !== sessionStorage.getItem('username')) {
+        sessionStorage.setItem('username', newUsername);
+      }
     } catch (error) {
       console.error('Gagal memperbarui akun:', error);
       setError('Gagal memperbarui akun. Coba lagi nanti.');
     }
-  };
-
-  const handleImageUpload = (event) => {
-    setProfileImage(event.target.files[0]);
   };
 
   return (
@@ -120,8 +150,8 @@ function Account() {
         {account ? (
           <div className="account-details">
             <img
-              src={account.profile_image_url || 'Ellipse 395.png'}
-              alt="icon"
+              src={profileImage || account.profile_image_url || 'Ellipse 395.png'}
+              alt="Photo profile akun"
               className="profile-picture"
             />
             {isEditing ? (
@@ -142,6 +172,8 @@ function Account() {
                   type="file"
                   onChange={handleImageUpload}
                   accept="image/*"
+                  placeholder='Upload Photo Profile akun'
+                  className="image-input"
                 />
                 <button onClick={handleUpdateAccount} className="update-button">
                   Simpan Perubahan

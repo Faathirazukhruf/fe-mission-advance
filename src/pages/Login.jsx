@@ -49,7 +49,7 @@ function Login() {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
 
-      // Kirim data pengguna ke API Anda (jika perlu)
+      // Kirim data pengguna ke API 
       const response = await axios.post(`${API_URL}/users`, {
         username: user.displayName,
         email: user.email,

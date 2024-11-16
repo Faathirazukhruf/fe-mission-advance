@@ -114,3 +114,7 @@ button:hover {
   color: white;
   background-color: #03a9f4;
 }
+
+.image-input {
+  place-items: center;
+}
