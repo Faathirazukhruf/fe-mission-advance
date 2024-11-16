@@ -150,7 +150,7 @@ function Account() {
         {account ? (
           <div className="account-details">
             <img
-              src={profileImage || account.profile_image_url || 'Ellipse 395.png'}
+              src={profileImage || account.profile_image_url || "Ellipse 395.png"}
               alt="Photo profile akun"
               className="profile-picture"
             />
@@ -168,12 +168,12 @@ function Account() {
                   onChange={(e) => setNewPassword(e.target.value)}
                   placeholder="Password (kosongkan jika tidak ingin mengubah)"
                 />
+                <h2 className="image-input">Update Photo Profile:</h2>
                 <input
                   type="file"
                   onChange={handleImageUpload}
                   accept="image/*"
                   placeholder='Upload Photo Profile akun'
-                  className="image-input"
                 />
                 <button onClick={handleUpdateAccount} className="update-button">
                   Simpan Perubahan

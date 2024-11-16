@@ -117,4 +117,6 @@ button:hover {
 
 .image-input {
   place-items: center;
+  color: white;
+  font-size: 120%;
 }
