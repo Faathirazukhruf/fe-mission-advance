@@ -1,12 +1,11 @@
+require('dotenv').config();
+
 const express = require('express');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
-const dotenv = require('dotenv');
 const nodemailer = require('nodemailer');
 const multer = require('multer');
 const path = require('path');
-
-dotenv.config(); // Membaca file .env
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -57,6 +56,23 @@ app.get('/api/users', (req, res) => {
       return res.status(500).json({ message: 'Error fetching users' });
     }
     return res.json(result);
+  });
+});
+
+// Mengambil semua user
+app.get('/api/users/:id', (req, res) => {
+  const {id} = req.params;
+  const query = `SELECT * FROM users where id="${id}"`;
+  connection.query(query, (err, result) => {
+    if (err) {
+      console.error('Error fetching data: ', err);
+      return res.status(500).json({ message: 'Error fetching users' });
+    }
+    if (!result.length) {
+      console.error('Error fetching data: ', err);
+      return res.status(500).json({ message: 'User not found' });
+    }
+    return res.json(result[0]);
   });
 });
 
@@ -115,6 +131,8 @@ app.post('/api/upload-image', upload.single('image'), (req, res) => {
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+
 
 
 
